@@ -1,0 +1,55 @@
+version: '3'
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: homeassistant/home-assistant:stable
+    volumes:
+      - /home/user/homeassist/config:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TZ=Europe/Berlin
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - /home/user/homeassist/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - /home/user/homeassist/mosquitto/data:/mosquitto/data
+      - /home/user/homeassist/mosquitto/log:/mosquitto/log
+      - /etc/localtime:/etc/localtime:ro
+  otbr:
+    image: bnutzer/otbr-tcp
+    container_name: otbr
+    network_mode: host
+    restart: unless-stopped
+    privileged: true
+    devices:
+      - /dev/net/tun
+    environment:
+      - RCP_HOST=192.168.0.5 # IP of dongle
+      - OTBR_WEB_ENABLE=0
+      - OTBR_BACKBONE_IF=eno1
+      - OTBR_REST_LISTEN_PORT=16728
+      - OTBR_WEB_ENABLE=1
+      - OTBR_WEB_PORT=16828
+    volumes:
+      - /home/user/homeassist/otbr:/var/lib/thread
+      - /etc/localtime:/etc/localtime:ro
+  matter-server:
+    container_name: matter-server
+    image: ghcr.io/home-assistant-libs/python-matter-server:stable
+    restart: unless-stopped
+    network_mode: host
+    security_opt:
+      - apparmor=unconfined
+    volumes:
+      - /home/user/homeassist/matter:/data
+      - /etc/localtime:/etc/localtime:ro
