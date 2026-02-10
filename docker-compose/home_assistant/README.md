@@ -43,8 +43,7 @@ Omada's "Advanced" features are often aggressive. Here is exactly what to toggle
 
 * **Path:** `Settings > Services > mDNS`
 * **Toggle:** **Enable mDNS**
-* **Services:** Select **All** (Matter uses `_matter._tcp.local` and `_matterc._udp.local`).
-* **Service/Client Networks:** Check both your **HA Network** and your **IoT Network**.
+* **Services:** Select **All** (Matter uses `_matter._tcp.local` and `_matterc._udp.local`).(Create a custom service if you want to be specific).
 
 ### Wired Network (MLD Snooping)
 
@@ -54,9 +53,9 @@ Omada's "Advanced" features are often aggressive. Here is exactly what to toggle
 * *Warning:* If set to **Discard**, your switch will drop the pairing request before HA even sees the device.
 
 
-* **MLD Querier:** **Enabled**. (Ensure only your main switch has this on).
+* **MLD Querier:** **Enabled**.
 
-### Wireless Settings (Optimizations)
+### Wireless Settings
 
 * **Path:** `Settings > Wireless Networks > [Your SSID] > Advanced Settings`
 * **Multicast-to-Unicast:** **Disabled**. (This feature "optimizes" traffic by converting it, but it often breaks the Matter handshake).

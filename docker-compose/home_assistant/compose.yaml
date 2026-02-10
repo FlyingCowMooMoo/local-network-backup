@@ -25,23 +25,30 @@ services:
       - /home/user/homeassist/mosquitto/data:/mosquitto/data
       - /home/user/homeassist/mosquitto/log:/mosquitto/log
       - /etc/localtime:/etc/localtime:ro
-  otbr:
-    image: bnutzer/otbr-tcp
-    container_name: otbr
-    network_mode: host
+  otbr-ha:
+    image: ghcr.io/ownbee/hass-otbr-docker
+    container_name: otbr-ha
     restart: unless-stopped
     privileged: true
+    network_mode: host
+    cap_add:
+      - SYS_ADMIN
+      - NET_ADMIN
     devices:
       - /dev/net/tun
     environment:
-      - RCP_HOST=192.168.0.5 # IP of dongle
-      - OTBR_WEB_ENABLE=0
-      - OTBR_BACKBONE_IF=eno1
-      - OTBR_REST_LISTEN_PORT=16728
-      - OTBR_WEB_ENABLE=1
-      - OTBR_WEB_PORT=16828
+      DEVICE: "/tmp/ttyOTBR"
+      BACKBONE_IF: eno1
+      FLOW_CONTROL: 1
+      FIREWALL: 1
+      NAT64: 1
+      BAUDRATE: 460800
+      OTBR_REST_PORT: 16729
+      OTBR_WEB_PORT: 16730
+      AUTOFLASH_FIRMWARE: 0
+      NETWORK_DEVICE: 192.168.0.5:6638 # IP of the SLZB-MR4U
     volumes:
-      - /home/user/homeassist/otbr:/var/lib/thread
+      - /home/user/homeassist/otbr-ha:/var/lib/thread
       - /etc/localtime:/etc/localtime:ro
   matter-server:
     container_name: matter-server
