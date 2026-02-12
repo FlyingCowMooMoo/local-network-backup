@@ -30,14 +30,14 @@ ARG VOICE_URL=https://huggingface.co/rhasspy/piper-voices/resolve/main
 RUN mkdir -p /data && \
     for voice in \
         "de/de_DE/thorsten/medium/de_DE-thorsten-medium" \
-        # "de/de_DE/thorsten/high/de_DE-thorsten-high" \
-        # "de/de_DE/thorsten/low/de_DE-thorsten-low" \
-        # "de/de_DE/thorsten_emotional/medium/de_DE-thorsten_emotional-medium" \
-        # "de/de_DE/kerstin/low/de_DE-kerstin-low" \
-        # "de/de_DE/karlsson/low/de_DE-karlsson-low" \
+        "de/de_DE/thorsten/high/de_DE-thorsten-high" \
+        "de/de_DE/thorsten/low/de_DE-thorsten-low" \
+        "de/de_DE/thorsten_emotional/medium/de_DE-thorsten_emotional-medium" \
+        "de/de_DE/kerstin/low/de_DE-kerstin-low" \
+        "de/de_DE/karlsson/low/de_DE-karlsson-low" \
         "de/de_DE/eva_k/x_low/de_DE-eva_k-x_low" \
-        # "de/de_DE/ramona/low/de_DE-ramona-low" \
-        # "de/de_DE/pavoque/low/de_DE-pavoque-low" \
+        "de/de_DE/ramona/low/de_DE-ramona-low" \
+        "de/de_DE/pavoque/low/de_DE-pavoque-low" \
     ; do \
         name="${voice##*/}"; \
         curl -fSL "${VOICE_URL}/${voice}.onnx?download=true"      -o "/data/${name}.onnx"; \

@@ -4,7 +4,7 @@ services:
     build: .
     restart: unless-stopped
     ports:
-      - "5100:5000"
+      - "29348:5000"
     volumes:
       - /etc/localtime:/etc/localtime:ro
     environment:
