@@ -48,7 +48,7 @@ services:
       AUTOFLASH_FIRMWARE: 0
       NETWORK_DEVICE: 192.168.0.5:6638 # IP of the SLZB-MR4U
     volumes:
-      - /home/user/homeassist/otbr-ha:/var/lib/thread
+      - /home/user/homeassist/otbr-ha:/data/thread
       - /etc/localtime:/etc/localtime:ro
   matter-server:
     container_name: matter-server
